@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pycharm
+# .idea/ : 파이참이 자동 생성, 사용자의 편의를 위해 제공
+.idea/
