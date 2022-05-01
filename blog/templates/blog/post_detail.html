@@ -16,7 +16,8 @@
 
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}" media="screen">
-
+  <!--https://fontawesome.com/-->
+  <script src="https://kit.fontawesome.com/d9e933d50c.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -87,6 +88,25 @@
 
         <!-- Post Content -->
         <p>{{ post.content }}</p>
+
+        <!--첨부파일 다운로드 버튼-->
+        {% if post.file_upload %}
+        <a href="{{ post.file_upload.url }}"
+           class="btn btn-outline-dark"
+           role="button">
+          Download :
+          {% if post.get_file_ext == 'csv' %}
+          <i class="fa-solid fa-file-csv"></i>
+          {% elif post.getfile_ext == 'xlsx' or post.getfile_ext == 'xls' %}
+          <i class="fa-solid fa-file-excel"></i>
+          {% elif post.getfile_ext == 'docx' or post.getfile_ext == 'doc' %}
+          <i class="fa-solid fa-file-word"></i>
+          {% else %}
+          <i class="fa-solid fa-file-arrow-down"></i>
+          {% endif %}
+          {{ post.get_file_name }}
+        </a>
+        {% endif %}
 
         <hr>
 
