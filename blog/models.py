@@ -18,4 +18,7 @@ class Post(models.Model):
         # {self.pk} : 해당 포스트의 pk값
         # {self.title} : 해당 포스트의 titler값
         return f'[{self.pk}]{self.title}'
-    
+
+    # 포스트 제목 링크 생성
+    def get_absolute_url(self):
+        return f'/blog/{self.pk}/'
