@@ -5,6 +5,8 @@ import os
 class Post(models.Model):
     # 제목
     title = models.CharField(max_length=30)
+    # 요약문 필드 만들기
+    hook_text = models.CharField(max_length=100, blank=True)
     # 내용
     content = models.TextField()
     # 이미지
