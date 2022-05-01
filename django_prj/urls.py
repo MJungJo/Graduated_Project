@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# 미디어 파일 위한 URL지정
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     # Blog 페이지
     path('blog/', include('blog.urls')),
@@ -24,3 +28,6 @@ urlpatterns = [
     # 대문페이지, 회사소개 페이지
     path('', include('single_pages.urls')),
 ]
+
+# 미디어 파일 위한 URL지정
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

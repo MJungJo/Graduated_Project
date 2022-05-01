@@ -7,6 +7,9 @@ class Post(models.Model):
     title = models.CharField(max_length=30)
     # 내용
     content = models.TextField()
+    # 이미지
+    head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
+
     # 작성일
     ## 자동으로 작성시각, 수정시각 저장하기
     created_at = models.DateTimeField(auto_now=True)
