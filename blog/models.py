@@ -22,7 +22,8 @@ class Post(models.Model):
     
     # 작성자 정보
     ## ForeignKey로 author 필드 구현
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    ## SET_NULL : 작성자 삭제시 빈 칸으로 둠
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         # {self.pk} : 해당 포스트의 pk값
