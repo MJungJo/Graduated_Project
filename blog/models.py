@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import os
 # Create your models here.
 # 포스트 모델 생성
@@ -18,13 +19,15 @@ class Post(models.Model):
     ## 자동으로 작성시각, 수정시각 저장하기
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     # 작성자 정보
-    # author = 추후 작성
+    ## ForeignKey로 author 필드 구현
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         # {self.pk} : 해당 포스트의 pk값
         # {self.title} : 해당 포스트의 titler값
-        return f'[{self.pk}]{self.title}'
+        return f'[{self.pk}]{self.title} :: {self.author}'
 
     # 포스트 제목 링크 생성
     def get_absolute_url(self):
