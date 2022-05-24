@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 추가
+    'django_extensions',
     'blog',
     'single_pages',
 ]

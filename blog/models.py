@@ -2,6 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 # Create your models here.
+
+# 카테고리 모델 생성
+class Category(models.Model):
+    # 각 카테고리의 이름을 담는 필드(중복 불가)
+    name = models.CharField(max_length=50, unique=True)
+    # 고유 URL만들 때 사용,(중복 불가)(한글가능)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+    
+    ## 관리자 페이지의 'Categorys' -> 'Categories'변경
+    class Meta:
+        verbose_name_plural = 'Categories'
+
 # 포스트 모델 생성
 class Post(models.Model):
     # 제목
@@ -25,10 +40,18 @@ class Post(models.Model):
     ## SET_NULL : 작성자 삭제시 빈 칸으로 둠
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
+    # 카테고리
+    ## null=True : 카테고리 미분류도 있을 수 있기에
+    ## on_delete=models.SET_NULL : 카테고리 삭제시 연결된 포스트 삭제 되지 않도록 NUll설정
+    ## blank=True : Post모델에 Category없어도 저장 가능하도록 함
+    category = models.ForeignKey(Category, null=True,
+                                 on_delete=models.SET_NULL,
+                                 blank=True)
+
     def __str__(self):
         # {self.pk} : 해당 포스트의 pk값
         # {self.title} : 해당 포스트의 titler값
-        return f'[{self.pk}]{self.title} :: {self.author}'
+        return f'[{self.pk}]{self.title} :: writer [{self.author}] :: category [{self.category}]'
 
     # 포스트 제목 링크 생성
     def get_absolute_url(self):
