@@ -15,6 +15,28 @@ class PostList(ListView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         return context
 
+# 카테고리 페이지
+def category_page(request, slug):
+    ## 미분류의 경유
+    if slug == 'no_category':
+        category = '미분류'
+        post_list = Post.objects.filter(category=None)
+    ## 미분류 외
+    else:
+        category = Category.objects.get(slug=slug)
+        post_list = Post.objects.filter(category=category)
+
+    return render(
+        request,
+        'blog/post_list.html',
+        {
+            'post_list': post_list,
+            'categories': Category.objects.all(),
+            'no_category_post_count': Post.objects.filter(category=None).count(),
+            'category': category,
+        }
+    )
+
 # 블로그 상세 페이지
 class PostDetail(DetailView):
     model = Post

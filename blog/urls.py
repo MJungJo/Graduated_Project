@@ -8,6 +8,8 @@ urlpatterns = [
     path('', views.PostList.as_view()),
     ## 상세 페이지
     path('<int:pk>/', views.PostDetail.as_view()),
+    ## 카테고리 페이지
+    path('category/<str:slug>/', views.category_page),
 
     # FBV 방식
     # 포스트 목록 페이지 정의

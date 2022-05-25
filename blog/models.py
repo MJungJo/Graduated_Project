@@ -13,6 +13,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+    # 카테고리 페이지 작성
+    def get_absolute_url(self):
+        return f'/blog/category/{self.slug}/'
+    
     ## 관리자 페이지의 'Categorys' -> 'Categories'변경
     class Meta:
         verbose_name_plural = 'Categories'
