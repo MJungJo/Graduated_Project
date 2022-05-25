@@ -6,6 +6,13 @@
 
 <!--포스트 영역-->
 <div id="post-area">
+  <!-- 카테고리 -->
+  {% if post.category %}
+    <span class="badge badge-secondary float-right">{{ post.category }}</span>
+  {% else %}
+    <span class="badge badge-secondary float-right">미분류</span>
+  {% endif %}
+
   <!-- Title -->
   <h1 class="mt-4">{{ post.title }}</h1>
   <!-- Hook -->

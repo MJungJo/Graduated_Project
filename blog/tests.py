@@ -54,13 +54,13 @@ class TestView(TestCase):
 
     # category 함수
     def category_card_test(self, soup):
-        categories_card=soup.find('div', id='categories-card')
+        categories_card = soup.find('div', id='categories-card')
         self.assertIn('Categories', categories_card.text)
         self.assertIn(f'{self.category_car.name} ({self.category_car.post_set.count()})',
                       categories_card.text)
         self.assertIn(f'{self.category_music.name} ({self.category_music.post_set.count()})',
                       categories_card.text)
-        self.assertIn(f'미분류 (1)', categories_card.text)
+        self.assertIn(f'미분류', categories_card.text)
 
     def test_post_list(self):
         # 포스트가 있는 경우
@@ -99,40 +99,40 @@ class TestView(TestCase):
         main_area = soup.find('div', id='main-area')
         self.assertIn('아직 게시물이 없습니다.', main_area.text)
 
-        
-
     # 포스트 상세 페이지 테스트 코드
     def test_post_detail(self):
         ## 1.1. 포스트가 하나 있다.
-        post_001 = Post.objects.create(
+        post_000 = Post.objects.create(
             title='First Post',
             content='Hello World. First Post.',
             author=self.user_trump,
         )
 
         ## 1.2. 그 포스트의 url은 '/blog/1/'이다.
-        self.assertEqual(post_001.get_absolute_url(), '/blog/1/')
+        self.assertEqual(self.post_001.get_absolute_url(), '/blog/1/')
 
         # 2. 첫번째 포스트 상세 페이지 테스트
         ## 2.1. 첫번째 포스트의 url로 접근하면 정산적으로 작동한다.(status code:200).
-        response = self.client.get(post_001.get_absolute_url())
+        response = self.client.get(self.post_001.get_absolute_url())
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         ## 2.2. 초스트 목록 페이징하 똑같은 내비게이션 바가 있다.
         self.navbar_test(soup)
+        self.category_card_test(soup)
 
         ## 2.3. 첫번째 포스트의 제목이 웹브라우저 탭 타이틀에 들어 있다.
-        self.assertIn(post_001.title, soup.title.text)
+        self.assertIn(self.post_001.title, soup.title.text)
 
         ## 2.4. 첫번째 포스트의 제목이 포스트 영역에 있다.
         main_area = soup.find('div', id='main-area')
         post_area = main_area.find('div', id='post-area')
-        self.assertIn(post_001.title, post_area.text)
+        self.assertIn(self.post_001.title, post_area.text)
+        self.assertIn(self.category_car.name, post_area.text)
 
         ## 2.5. 첫번째 포스트의 작성자(author)가 포스트 영역에 있다.
         self.assertIn(self.user_trump.username.upper(), post_area.text)
 
         ## 2.6. 첫번째 포스트의 내용(content)이 포스트 영역에 있다
-        self.assertIn(post_001.content, post_area.text)
+        self.assertIn(self.post_001.content, post_area.text)
         
