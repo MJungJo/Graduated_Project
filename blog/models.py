@@ -3,6 +3,17 @@ from django.contrib.auth.models import User
 import os
 # Create your models here.
 
+# 태그 모델 생성
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f'/blog/tag/{self.slug}'
+
 # 카테고리 모델 생성
 class Category(models.Model):
     # 각 카테고리의 이름을 담는 필드(중복 불가)
@@ -51,6 +62,9 @@ class Post(models.Model):
     category = models.ForeignKey(Category, null=True,
                                  on_delete=models.SET_NULL,
                                  blank=True)
+
+    # 태그
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         # {self.pk} : 해당 포스트의 pk값
