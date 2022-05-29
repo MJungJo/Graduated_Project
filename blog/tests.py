@@ -8,23 +8,39 @@ class TestView(TestCase):
     def setUp(self):
         self.client = Client()
 
-        self.user_trump = User.objects.create_user(username='trump', password='somepassword')
-        self.user_obama = User.objects.create_user(username='obama', password='somepassword')
+        self.user_trump = User.objects.create_user(
+            username='trump',
+            password='somepassword'
+        )
+        self.user_obama = User.objects.create_user(
+            username='obama',
+            password='somepassword'
+        )
 
         # 카테고리
-        self.category_car = Category.objects.create(name='car', slug='car')
-        self.category_music = Category.objects.create(name='music', slug='music')
+        self.category_car = Category.objects.create(
+            name='car', slug='car'
+        )
+        self.category_music = Category.objects.create(
+            name='music', slug='music'
+        )
 
         # 태그
-        self.tag_car_ko = Tag.objects.create(name='자동차', slug='자동차')
-        self.tag_car = Tag.objects.create(name='cars', slug='cars')
-        self.tag_hello = Tag.objects.create(name='hello', slug='hello')
+        self.tag_car_ko = Tag.objects.create(
+            name='자동차', slug='자동차'
+        )
+        self.tag_car = Tag.objects.create(
+            name='cars', slug='cars'
+        )
+        self.tag_hello = Tag.objects.create(
+            name='hello', slug='hello'
+        )
 
         self.post_001 = Post.objects.create(
             title='첫 번쨰 포스트',
             content='Hello World. We are the World',
             category=self.category_car,
-            author=self.user_trump
+            author=self.user_trump,
         )
         self.post_001.tags.add(self.tag_hello)
 
@@ -32,12 +48,12 @@ class TestView(TestCase):
             title='두 번쨰 포스트',
             content='두 번쨰',
             category=self.category_music,
-            author=self.user_obama
+            author=self.user_obama,
         )
         self.post_003 = Post.objects.create(
             title='세 번쨰 포스트',
             content='category가 없을 수 있다',
-            author=self.user_obama
+            author=self.user_obama,
         )
         self.post_003.tags.add(self.tag_car_ko)
         self.post_003.tags.add(self.tag_car)
@@ -65,11 +81,18 @@ class TestView(TestCase):
     def category_card_test(self, soup):
         categories_card = soup.find('div', id='categories-card')
         self.assertIn('Categories', categories_card.text)
-        self.assertIn(f'{self.category_car.name} ({self.category_car.post_set.count()})',
-                      categories_card.text)
-        self.assertIn(f'{self.category_music.name} ({self.category_music.post_set.count()})',
-                      categories_card.text)
-        self.assertIn(f'미분류', categories_card.text)
+        self.assertIn(
+            f'{self.category_car.name} ({self.category_car.post_set.count()})',
+            categories_card.text
+        )
+        self.assertIn(
+            f'{self.category_music.name} ({self.category_music.post_set.count()})',
+            categories_card.text
+        )
+        self.assertIn(
+            f'미분류 ({Post.objects.filter(category=None).count()})',
+            categories_card.text
+        )
 
     def test_post_list(self):
         # 포스트가 있는 경우
@@ -178,6 +201,23 @@ class TestView(TestCase):
 
         main_area = soup.find('div', id='main-area')
         self.assertIn(self.category_car.name, main_area.text)
+        self.assertIn(self.post_001.title, main_area.text)
+        self.assertNotIn(self.post_002.title, main_area.text)
+        self.assertNotIn(self.post_003.title, main_area.text)
+
+    # 태그 테스트 코드
+    def test_tag_page(self):
+        response = self.client.get(self.tag_hello.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.navbar_test(soup)
+        self.category_card_test(soup)
+
+        self.assertIn(self.tag_hello.name, soup.h1.text)
+
+        main_area = soup.find('div', id='main-area')
+        self.assertIn(self.tag_hello.name, main_area.text)
         self.assertIn(self.post_001.title, main_area.text)
         self.assertNotIn(self.post_002.title, main_area.text)
         self.assertNotIn(self.post_003.title, main_area.text)

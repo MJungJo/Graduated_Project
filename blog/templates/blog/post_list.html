@@ -5,6 +5,12 @@
     {% if category %}
         <span class="badge badge-secondary">{{ category }}</span>
     {% endif %}
+    {% if tag %}
+        <span class="badge badge-pill badge-light">
+            <i class="fas fa-tags"></i>
+            {{ tag }} ({{ tag.post_set.count }})
+        </span>
+    {% endif %}
 </h1>
 <!--post_list에 포스트가 있다면 실행-->
 {% if post_list.exists %}
