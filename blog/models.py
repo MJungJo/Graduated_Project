@@ -12,7 +12,7 @@ class Tag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/blog/tag/{self.slug}'
+        return f'/blog/tag/{self.slug}/'
 
 # 카테고리 모델 생성
 class Category(models.Model):
