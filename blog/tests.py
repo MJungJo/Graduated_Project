@@ -16,6 +16,8 @@ class TestView(TestCase):
             username='obama',
             password='somepassword'
         )
+        self.user_obama.is_staff = True # 'obama'를 관리자로 인명
+        self.user_obama.save()
 
         # 카테고리
         self.category_car = Category.objects.create(
@@ -227,8 +229,12 @@ class TestView(TestCase):
         # 로그인 하지 않으면 status code가 200이면 안됨
         response = self.client.get('blog/create_post/')
         self.assertNotEqual(response.status_code, 200)
-        # 로그인 한다.
-        self.client.login(username='trump', password='somepassword')
+        # staff가 아닌 유저가 로그인
+        self.client.login(username='trump',password='somepassword')
+        response = self.client.get('/blog/create_post/')
+        self.assertNotEqual(response.status_code, 200)
+        # staff로 로그인 한다.
+        self.client.login(username='obama', password='somepassword')
 
         response = self.client.get('/blog/create_post/')
         self.assertEqual(response.status_code, 200)
@@ -247,4 +253,4 @@ class TestView(TestCase):
         )
         last_post = Post.objects.last()
         self.assertEqual(last_post.title, "Post Form 만들기")
-        self.assertEqual(last_post.author.username, 'trump')
+        self.assertEqual(last_post.author.username, 'obama')
