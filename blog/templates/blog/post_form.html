@@ -9,6 +9,11 @@
         {% csrf_token %}
         <table>
             {{ form }}
+            <!-- Tags 추가 -->
+            <tr>
+                <th><label fpr="id_tags_str">Tags:</label></th>
+                <td><input type="text" name="tags_str" id="id_tags_str"></td>
+            </tr>
         </table>
         <button type="submit" class="btn btn-primary float-right">
             Submit
