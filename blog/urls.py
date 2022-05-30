@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     # CBV방식
+    ## 포스트 수정 페이지
+    path('update_post/<int:pk>/', views.PostUpdate.as_view()),
     ## 포스트 작성 페이지
     path('create_post/', views.PostCreate.as_view()),
     ## 태그 페이지
