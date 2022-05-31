@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 추가
     'django_extensions',
+    ## 폼 꾸미기
     'crispy_forms',
+    'markdownx',
+
     'blog',
     'single_pages',
 ]

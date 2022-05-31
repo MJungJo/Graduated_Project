@@ -25,6 +25,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     # Admin 페이지
     path('admin/', admin.site.urls),
+    # markdownx
+    path('markdownx/', include('markdownx.urls')),
     # 대문페이지, 회사소개 페이지
     path('', include('single_pages.urls')),
 ]
