@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 추가
     'django_extensions',
+    'crispy_forms',
     'blog',
     'single_pages',
 ]
@@ -126,6 +127,8 @@ STATIC_URL = 'static/'
 # 이미지 저장
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+# 폼 모양 꾸미기
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
