@@ -272,6 +272,7 @@ class TestView(TestCase):
         # 로그인 하지 않은 경우
         response = self.client.get(update_post_url)
         self.assertNotEqual(response.status_code, 200)
+
         # 로그인은 했지만 작성자가 아닌 경우
         self.assertNotEqual(self.post_003.author, self.user_trump)
         self.client.login(
@@ -293,12 +294,18 @@ class TestView(TestCase):
         main_area = soup.find('div', id='main-area')
         self.assertIn('Edit Post', main_area.text)
 
+        # 포스트 수정 페이지에 태그 입력한 추가
+        tag_str_input = main_area.find('input', id='id_tags_str')
+        self.assertTrue(tag_str_input)
+        self.assertIn('자동차; cars', tag_str_input.attrs['value'])
+
         response = self.client.post(
             update_post_url,
             {
                 'title': '세번쨰 포스트를 수정',
                 'content': '안녕 World, 우리는 하나',
-                'category': self.category_music.pk
+                'category': self.category_music.pk,
+                'tags_str': '자동차; 한글 태그, some tag'
             },
             follow=True
         )
@@ -307,6 +314,10 @@ class TestView(TestCase):
         self.assertIn('세번쨰 포스트를 수정', main_area.text)
         self.assertIn('안녕 World, 우리는 하나', main_area.text)
         self.assertIn(self.category_music.name, main_area.text)
+        self.assertIn('자동차', main_area.text)
+        self.assertIn('한글 태그', main_area.text)
+        self.assertIn('some tag', main_area.text)
+        self.assertNotIn('cars', main_area.text)
 
 
 
