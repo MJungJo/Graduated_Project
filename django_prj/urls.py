@@ -27,6 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # markdownx
     path('markdownx/', include('markdownx.urls')),
+    # 회원가입&로그인
+    path('accounts/', include('allauth.urls')),
     # 대문페이지, 회사소개 페이지
     path('', include('single_pages.urls')),
 ]
