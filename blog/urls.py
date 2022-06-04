@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     # CBV방식
+    ## 댓글 삭제 페이지
+    path('delete_comment/<int:pk>/', views.delete_comment),
     ## 댓글 수정 페이지
     path('update_comment/<int:pk>/', views.CommentUpdate.as_view()),
     ## 포스트 수정 페이지
