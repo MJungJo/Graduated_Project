@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     # CBV방식
+    ## 검색 기능 페이지
+    path('search/<str:q>/', views.PostSearch.as_view()),
     ## 댓글 삭제 페이지
     path('delete_comment/<int:pk>/', views.delete_comment),
     ## 댓글 수정 페이지
