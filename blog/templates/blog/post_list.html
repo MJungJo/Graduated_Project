@@ -55,7 +55,7 @@
             {% endif %}
 
             <!--truncatewords : 글자 수 제한-->
-            <p class="card-text">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
+            <p class="card-text">{{ p.get_content_markdown | truncatewords_html:10 | safe }}</p>
             <!--태그-->
             {% if p.tags.exists %}
                 <i class="fa-solid fa-tags"></i>
