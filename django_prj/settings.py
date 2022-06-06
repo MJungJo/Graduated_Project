@@ -70,8 +70,8 @@ ROOT_URLCONF = 'django_prj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': ['templates'],
-        'DIRS': [],
+        'DIRS': ['templates'],
+        #'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
