@@ -1,0 +1,43 @@
+{% load static %}
+<!-- modal1 -->
+<div class="modal fade" id="Car1" tabindex="-1" aria-labelledby="Car1ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Car1ModalLabel">
+            <b>Location</b>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-lg-7">
+                <img class="img-fluid" src="{% static 'single_pages/images/madal1.jpg' %}">
+              </div>
+              <div class="col-lg-5">
+                  <p>
+                      <b>도로명</b>
+                      <br/>경북 군위군 군위읍 경북대로 3367
+                  </p>
+                  <p>
+                      <b>지번</b>
+                      <br/>금구리 866-2
+                  </p>
+                  <p>
+                      <b>지도앱</b><br/>
+                      <a href="https://map.naver.com/v5/search/%EC%98%81%EB%82%A8%EC%A2%85%ED%95%A9%ED%8F%90%EC%B0%A8%EC%9E%A5/place/34541998?c=14311637.5367041,4328849.8813625,18,0,0,2,dh&placePath=%2Fhome%3Fentry=pll">
+                          Naver Map
+                      </a>
+                  </p>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /modal1 -->
